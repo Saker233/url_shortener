@@ -39,7 +39,11 @@ func createURL(c *gin.Context) {
 		return
 	}
 
-	shortCode := service.CreateURL()
+	shortCode, err := service.CreateURL()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
 
 	c.JSON(http.StatusOK, shortCode)
 }
