@@ -13,7 +13,7 @@ FROM urls
 WHERE short_code = $1;
 
 
--- name: DeleteURL :name
+-- name: DeleteURL :exec
 DELETE FROM urls
 WHERE short_code = $1;
 
