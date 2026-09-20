@@ -23,6 +23,7 @@ func InitServer() {
 	r := gin.Default()
 	r.GET("/health", getHealth)
 	r.POST("/url", createURL)
+	r.GET("/:short_code", redirectURL)
 
 	_ = r.Run(os.Getenv("PORT"))
 }
@@ -60,6 +61,19 @@ func createURL(c *gin.Context) {
 
 	rsp := db.Url(url)
 	c.JSON(http.StatusOK, rsp)
+}
+
+func redirectURL(c *gin.Context) {
+	short_code := c.Param("short_code")
+
+	url, err := util.GetQueries().GetURLByShortCode(c, short_code)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, errorResponse(err))
+	}
+
+	c.Redirect(http.StatusFound, url.OriginalUrl)
+
+	c.JSON(http.StatusOK, url)
 }
 
 func errorResponse(err error) gin.H {
