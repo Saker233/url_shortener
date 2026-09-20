@@ -24,7 +24,7 @@ type CreateURLParams struct {
 }
 
 func (q *Queries) CreateURL(ctx context.Context, arg CreateURLParams) (Url, error) {
-	row := q.db.QueryRowContext(ctx, createURL, arg.ShortCode, arg.OriginalUrl)
+	row := q.db.QueryRow(ctx, createURL, arg.ShortCode, arg.OriginalUrl)
 	var i Url
 	err := row.Scan(
 		&i.ID,
@@ -42,7 +42,7 @@ WHERE short_code = $1
 `
 
 func (q *Queries) DeleteURL(ctx context.Context, shortCode string) error {
-	_, err := q.db.ExecContext(ctx, deleteURL, shortCode)
+	_, err := q.db.Exec(ctx, deleteURL, shortCode)
 	return err
 }
 
@@ -53,7 +53,7 @@ WHERE short_code = $1
 `
 
 func (q *Queries) GetURLByShortCode(ctx context.Context, shortCode string) (Url, error) {
-	row := q.db.QueryRowContext(ctx, getURLByShortCode, shortCode)
+	row := q.db.QueryRow(ctx, getURLByShortCode, shortCode)
 	var i Url
 	err := row.Scan(
 		&i.ID,

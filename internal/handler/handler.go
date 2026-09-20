@@ -4,7 +4,9 @@ import (
 	"net/http"
 	"os"
 
+	db "url_shortener/internal/database/sqlc"
 	"url_shortener/internal/service"
+	"url_shortener/internal/util"
 
 	"github.com/gin-gonic/gin"
 )
@@ -45,7 +47,19 @@ func createURL(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, shortCode)
+	arg := db.CreateURLParams{
+		ShortCode:   shortCode,
+		OriginalUrl: req.Original_URL,
+	}
+
+	url, err := util.GetQueries().CreateURL(c, arg)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	rsp := db.Url(url)
+	c.JSON(http.StatusOK, rsp)
 }
 
 func errorResponse(err error) gin.H {
