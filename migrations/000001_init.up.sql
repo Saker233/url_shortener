@@ -5,3 +5,5 @@ CREATE TABLE urls (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     expires_at TIMESTAMPTZ
 );
+
+CREATE INDEX idx_urls_short_code ON urls(short_code);
