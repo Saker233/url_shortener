@@ -1,12 +1,15 @@
 package main
 
 import (
+	"url_shortener/internal/handler"
 
 	"github.com/gin-gonic/gin"
-	"url_shortener/internal/handler"
+	"github.com/joho/godotenv"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
+	godotenv.Load("app.env")
 	r := gin.Default()
 
 	r.GET("/health", handler.GetHealth)
