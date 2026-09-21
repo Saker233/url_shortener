@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        go 'golang
+        go 'golang'
     }
     triggers {
         pollSCM('H/1 * * * *')
