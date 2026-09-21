@@ -16,6 +16,7 @@ func TestCreateURL(t *testing.T) {
 			"CreateURL() returned %d characters, want 10",
 			len(shortCode),
 		)
+		
 	}
 }
 
