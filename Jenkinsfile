@@ -4,9 +4,6 @@ pipeline {
     tools {
         go 'golang'
     }
-    triggers {
-        pollSCM('H/1 * * * *')
-    }
 
     stages {
         stage('Checkout') {
