@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         go 'golang'
+        docker 'docker'
     }
     triggers {
         pollSCM('H/1 * * * *')
