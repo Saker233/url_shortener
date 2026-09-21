@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         go 'golang'
-        docker 'docker'
     }
     triggers {
         pollSCM('H/1 * * * *')
@@ -30,7 +29,7 @@ pipeline {
 
         stage('Docker build') {
             steps {
-                sh 'Docker build -t saker233/url-shortener:latest .'
+                sh 'docker build -t saker233/url-shortener:latest .'
             }
         }
         stage('Docker Push') {
